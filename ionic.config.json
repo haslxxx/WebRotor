@@ -1,0 +1,8 @@
+{
+  "name": "WebRotor",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "a3c88883"
+}
