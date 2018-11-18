@@ -20,15 +20,15 @@ export class WebsocketServiceProvider {
   position: string ;
   messages = [];
   myObservable;
-
+  mySubject;
 
   constructor() {
     console.log('Hello WebsocketServiceProvider Provider');
     this.ws = new WebSocket('ws://10.0.0.175',[]);
     this.initListeners();
-
-    //this.setObservable();
-    this.setSubject();
+    this.mySubject  = new Subject();
+    this.myObservable = new Observable();
+//    this.subscribeObservable();
   }
 
  
@@ -40,6 +40,7 @@ export class WebsocketServiceProvider {
 
   public initListeners() { //
     console.log ("EventListenersInit");
+
     this.ws.addEventListener('open', event => {
       console.log("WS.open");
       this.messages.push({content: "Rotor Connected"});        
@@ -51,6 +52,12 @@ export class WebsocketServiceProvider {
       this.position = event.data;
       //################### SUBJECT #########################
       this.mySubject.next(this.position);
+/*      
+      this.myObservable.create(observer => {
+        observer.next(this.position);
+      });
+*/    // this.myObservable.next(this.position);
+  
     });
 
     this.ws.addEventListener('close', event => {
@@ -67,37 +74,35 @@ export class WebsocketServiceProvider {
       this.ws.close();
   }
 
-//Observer = require("observer");
 
-//################################ Observer ##########################
+
+//################################ Observer ##########################  geht alles nicht
 // Neue versuche mit  RxJS
-  public setObservable() {
-  //  this.setPosition = callback;
+  public subscribeObservable() {
 
-    let myObservable = Observable.create(observer => {
-  //    observer.next("hello");
+    this.myObservable.create(observer => {
       observer.next(this.position);
     });
-    this.myObservable = myObservable;
-
-    // DAS gehört eigentlich in home.ts
-    // macht aber hier schon Krawumm :-(
-    myObservable.subscribe((data) => {console.log("MyData" + data);} )
+   // this.myObservable.next(this.position);
+    this.myObservable.subscribe((data) => {console.log("MyData" + data);} )
   }
- 
+
   public getObserverObject() {
     return this.myObservable;
   }
 
-//################### SUBJECT #########################
-  mySubject = new Subject();
-  public setSubject() {    
+//################### SUBJECT #########################  funktioniert wunderbar
+  //mySubject = new Subject();  -->   Nach Oben (konstruktor) gewandert !
+  /*
+  public setSubject() {    --> brauchen wir hier nicht, subscription im ziel (home.ts)
     this.mySubject.subscribe((data) => {
       console.log(data);
     });
 
-    this.mySubject.next(this.position);
+    this.mySubject.next(this.position); -->   Nach Oben gewandert (wo die daten entstehen .. onMessage) !
   }
+  */
+
   public getSubjectObject() {
     return this.mySubject;
   }

@@ -19,6 +19,9 @@ import {Subject} from 'rxjs/Subject';
 export class HomePage {
 
   jsonX: string;
+  onButton: boolean = true;
+  remoteChecked: boolean = false;
+  motorSpeed: number;
   position: String = "155";
   wsp = new WebsocketServiceProvider();
 
@@ -30,6 +33,18 @@ export class HomePage {
     console.log ("Send Clicked " + this.jsonX);
     //this.sendMessage(this.jsonX);
     this.wsp.sendMessage(this.jsonX);
+  }
+
+  onButtonClicked() {
+    console.log("onButton: " + this.onButton);
+  }
+
+  onRemoteChange() {
+    console.log("remote: " + this.remoteChecked);
+  }
+
+  motorSpeedChange() {
+    this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"M\",\"val\":\"" + this.motorSpeed    + "\"}" );
   }
 
   leftButtonClicked() {  
