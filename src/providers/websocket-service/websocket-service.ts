@@ -17,7 +17,7 @@ import {Subject} from 'rxjs/Subject';
 export class WebsocketServiceProvider {
 
   ws: WebSocket;  
-  setPosition ;
+  position: string ;
   myObservable;
 
 //  constructor(public http: HttpClient) {
@@ -28,7 +28,8 @@ export class WebsocketServiceProvider {
       this.ws = new WebSocket('ws://10.0.0.175',[]);
       this.initListeners();
 
-      this.setObservable();
+      //this.setObservable();
+      this.setSubject();
   }
 
   //ws = new WebSocket('ws://10.0.0.175',[]);
@@ -51,7 +52,8 @@ export class WebsocketServiceProvider {
 //        this.zone.run(() => {
   console.log("WS.message " + event.data);
             this.messages.push(JSON.parse(event.data));
-//            this.setPosition(event.data);
+            this.position = event.data;
+            this.mySubject.next(this.position);
 //        });
     });
     this.ws.addEventListener('close', event => {
@@ -77,14 +79,26 @@ public setObservable() {
 //  this.setPosition = callback;
 
   let myObservable = Observable.create(observer => {
-    observer.next("hello").next(this.setPosition);
+//    observer.next("hello");
+    observer.next(this.position);
 
   });
   this.myObservable = myObservable;
 
   // DAS gehört eigentlich in home.ts
   // macht aber hier schon Krawumm :-(
-  //  myObservable.subscribe((data) => {console.log(data);} )
+    myObservable.subscribe((data) => {console.log("MyData" + data);} )
+}
+
+mySubject = new Subject();
+public setSubject() {
+  
+
+  this.mySubject.subscribe((data) => {
+    console.log(data)
+  });
+
+  this.mySubject.next(this.position);
 }
 
 public getObserverObject() {

@@ -42,6 +42,7 @@ export class HomePage {
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"S\"}");
   }
 
+  //################################ OBSERVER####################
   /*  ..... geht so nicht ??  :-(
   establishObservable() {
     var observbl: Observable = this.wsp.getObserverObject;
