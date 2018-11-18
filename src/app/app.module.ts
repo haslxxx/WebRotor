@@ -11,6 +11,16 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { WebsocketServiceProvider } from '../providers/websocket-service/websocket-service';
+//import { Observer } from 'observer';
+//import { Socket  } from 'socket.io-client';
+
+//import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+
+//const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+//const config: SocketIoConfig = { url: 'http://10.0.0.175:80', options: {} };
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -21,7 +31,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp) ,
+    //SocketIoModule.forRoot(config)
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,7 +46,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler} ,
+    WebsocketServiceProvider
   ]
 })
 export class AppModule {}
