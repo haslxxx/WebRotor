@@ -23,7 +23,7 @@ export class HomePage {
   wsp = new WebsocketServiceProvider();
 
   constructor(public navCtrl: NavController) {
-    //this.establishCallback();
+    this.subscribeDataSubject();
   }
 
   sendButtonClicked() {
@@ -42,6 +42,10 @@ export class HomePage {
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"S\"}");
   }
 
+  setPosition(pos) {
+    this.position = pos;
+  }
+
   //################################ OBSERVER####################
   /*  ..... geht so nicht ??  :-(
   establishObservable() {
@@ -49,6 +53,16 @@ export class HomePage {
     observbl.subscribe((data) => {console.log(data);} )
   }
 */
+  mySubject; 
+  subscribeDataSubject() {
+    this.mySubject = this.wsp.getSubjectObject();
+
+    this.mySubject.subscribe((data) => {
+      console.log("home " + data);
+      this.setPosition(data);
+    });
+
+  }
 
 
   // ###############obsolete######################
