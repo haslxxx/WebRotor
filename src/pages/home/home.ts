@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 import { WebsocketServiceProvider } from '../../providers/websocket-service/websocket-service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
@@ -23,6 +23,7 @@ export class HomePage {
   remoteChecked: boolean = false;
   motorSpeed: number;
   position: String = "155";
+  
   wsp = new WebsocketServiceProvider();
 
   constructor(public navCtrl: NavController) {
@@ -72,48 +73,13 @@ export class HomePage {
   subscribeDataSubject() {
     this.mySubject = this.wsp.getSubjectObject();
 
-    this.mySubject.subscribe((data) => {
-      console.log("home " + data);
+    this.mySubject.subscribe((data) => { 
+//      console.log("homeSubscribed " + data);
       this.setPosition(data);
     });
 
   }
 
-
-  // ###############obsolete######################
-  /*
-  public setPosition(pos) {
-    this.position = pos;
-  }
-*/
-
-/*
-  //declare function fn(): string;
-  public myCallback: (name: string) => string;
-
-  establishCallback () {
-//    this.wsp.getPositionCallback( {function(x) {this.position = String(x);} });
-    this.wsp.getPositionCallback(this.myCallback("x"));
-  }
-  
-
-}
-*/
-
-
-/*
-export class HomePage {
-  jsonX: String;
-
-  constructor(public navCtrl: NavController) {
-
-  }
-
-
-  sendButtonClicked() {
-    console.log ("Send Clicked " + this.jsonX);
-  }
-*/
 
 
 } // end Class

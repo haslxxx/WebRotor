@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { WebsocketServiceProvider } from '../providers/websocket-service/websocket-service';
+import { AlertController } from 'ionic-angular';
 //import { Observer } from 'observer';
 //import { Socket  } from 'socket.io-client';
 
@@ -31,9 +32,9 @@ import { WebsocketServiceProvider } from '../providers/websocket-service/websock
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp) ,
+    IonicModule.forRoot(MyApp) 
     //SocketIoModule.forRoot(config)
-    
+  
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,7 +48,8 @@ import { WebsocketServiceProvider } from '../providers/websocket-service/websock
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler} ,
-    WebsocketServiceProvider
+    WebsocketServiceProvider,
+    AlertController
   ]
 })
 export class AppModule {}

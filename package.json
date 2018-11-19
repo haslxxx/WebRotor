@@ -43,11 +43,11 @@
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "sw-toolbox": "3.6.0",
-    "ws": "^6.1.1",
+    "ws": "^6.1.2",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.0",
+    "@ionic/app-scripts": "^3.2.0",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",

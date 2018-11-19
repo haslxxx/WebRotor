@@ -27,6 +27,14 @@
   <ion-item>
     <ion-label>Position: {{position}}</ion-label> 
   </ion-item>
+  <ion-item>
+    <ion-range readonly="true" min="0" max="1023"  color="secondary"
+            [(ngModel)]="position" >
+      <ion-label range-left>0°</ion-label>
+      <ion-label range-right>360°</ion-label>
+    </ion-range>
+  </ion-item>
+
 
   <ion-item>
     <ion-label>Activate</ion-label>
@@ -47,6 +55,7 @@
       <ion-label range-right>100%</ion-label>
     </ion-range>
   </ion-item>
+
   <p>
     .....
   </p>

@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 import {Observable } from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
+import { AlertController } from 'ionic-angular';
+
 /*
   Generated class for the WebsocketServiceProvider provider.
 
@@ -21,23 +23,37 @@ export class WebsocketServiceProvider {
   messages = [];
   myObservable;
   mySubject;
+  alertCtrl: AlertController;
 
-  constructor() {
-    console.log('Hello WebsocketServiceProvider Provider');
+//  constructor(public alertCtrl: AlertController) {
+    constructor() {
+      console.log('Hello WebsocketServiceProvider Provider');
     this.ws = new WebSocket('ws://10.0.0.175',[]);
     this.initListeners();
     this.mySubject  = new Subject();
     this.myObservable = new Observable();
+//    this.alertCtrl = new AlertController();  will irgendwelche parameter die ich nicht kenne
 //    this.subscribeObservable();
   }
 
- 
+  // GEHT NICHT OHNE Alertcontroller, gibts aber nicht
+  showAlert(code, message) {
+    const alert = this.alertCtrl.create({
+      title: 'ERROR --' + code, subTitle: message, buttons: ['OK']
+    });
+    alert.present();
+  }
 
 
   public sendMessage = function(message){
       this.ws.send(message);
   };
 
+/*
+  handleParseError(event) {
+    console.log("PARSE ERROR " + event);
+  }
+*/
   public initListeners() { //
     console.log ("EventListenersInit");
 
@@ -48,10 +64,31 @@ export class WebsocketServiceProvider {
 
     this.ws.addEventListener('message', event => {
       console.log("WS.message " + event.data);
-      this.messages.push(JSON.parse(event.data));
-      this.position = event.data;
+      // TODO  errorhandling für JSON.parse  .. falls ein ungültiger json kommt
+      var jsonObj = JSON.parse(event.data);
+      var reply = jsonObj["reply"];
+
+      if (reply !== undefined) {  // data arrived
+        console.log("reply --> " + reply);
+        if (reply == "OK") {
+          // schön, aber was tun außer freuen ??
+        }
+        if (reply == "ERR") {
+          var code = jsonObj["code"];
+          var text = jsonObj["text"];
+//          this.showAlert(code, text); // TODO zum funktionieren bringen
+        }
+      }
+      var bearing = jsonObj["bearing"];
+      if (bearing !== undefined) {  // data arrived
+        this.position = bearing;
+        this.mySubject.next(this.position);
+      }
+
+      //this.position = event.data;
       //################### SUBJECT #########################
-      this.mySubject.next(this.position);
+      
+      //################ Observer ###############  Geht nicht 
 /*      
       this.myObservable.create(observer => {
         observer.next(this.position);
