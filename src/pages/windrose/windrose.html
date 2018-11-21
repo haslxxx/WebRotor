@@ -1,9 +1,167 @@
-<!--
-  Generated template for the WindrosePage page.
+<ion-header>
+  <ion-navbar>
+    <ion-title>WEB Rotor  PRODUCTION PAGE</ion-title>
+  </ion-navbar>
+  <!--   
+  <div   [innerHTML]="head"></div>
+ --> 
+</ion-header>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
+<ion-content padding>
+    <ion-grid>
+        <ion-row justify-content-start class="border">
+          <ion-col col-5>
+              <br>
+            <ion-item >
+              <ion-label>Rotor connected</ion-label>
+              <ion-toggle  color="secondary" checked="true" 
+                          [(ngModel)]="onButtonON"  (ionChange)="connectButtonChange()">
+              </ion-toggle>              
+            </ion-item>            
+          </ion-col>
+          <ion-col col-3>
+              <br>
+            <ion-item>2 of 3</ion-item>
+            
+          </ion-col>
+          <ion-col col-4>
+              <br>
+                
+    <ion-item>
+      <ion-label  >Remote Enable</ion-label>
+      <ion-checkbox  item-right [(ngModel)]="remoteChecked" (click)="remoteAllowChange()"></ion-checkbox>
+    </ion-item>
+  
+             
+              <br>
+          </ion-col>
+        </ion-row>
+
+        <ion-row  justify-content-end  class="border">
+          <ion-col col-9>
+              <ion-item> 
+                <img width="300" height="300" 
+                  [src]="image" id="windrose"/> 
+              </ion-item> 
+              <ion-item>
+
+                  <ion-range disabled="true" pin="true" min="0" max="1023"  color="secondary"
+                          [(ngModel)]="position" >
+                    <ion-label range-left>0°</ion-label>
+                    <ion-label range-right>360°</ion-label>
+                  </ion-range>
+                </ion-item>
+              
+          </ion-col>
+          <ion-col col-3>
+              <ion-list>
+
+                  <ion-item>
+                    <ion-label stacked class="colorlabel">Aktuelle <br> Richtung</ion-label>
+                  
+                    <ion-label class="bigfont">{{positionGrad}} °</ion-label>
+                    
+                    <ion-input type="text"></ion-input>
+                  </ion-item>
+                
+                  <ion-item>
+                    <ion-label stacked class="colorlabel"> SOLLeingabe</ion-label>
+                    <ion-input type="text" class="bigfont" [(ngModel)]="positionRequested"  (keypress)="positionRequestedChanged($event.keyCode)"></ion-input>
+                  </ion-item>
+
+                  
+                      
+
+                      <ion-list radio-group >
+                          <ion-item>
+                              <ion-label stacked class="colorlabel">Motor<br>Speed</ion-label>
+                            </ion-item>
+                          
+                        
+                          <ion-item>
+                            <ion-label>Langsam</ion-label>
+                            <ion-radio  value="40"(click)="motorSpeedChange(1)"></ion-radio>
+                          </ion-item>
+                        
+                          <ion-item>
+                            <ion-label>Mittel</ion-label>
+                            <ion-radio value="70" checked="true" (click)="motorSpeedChange(2)"></ion-radio>
+                          </ion-item>
+                        
+                          <ion-item>
+                            <ion-label>Schnell</ion-label>
+                            <ion-radio value="100" (click)="motorSpeedChange(3)"></ion-radio>
+                          </ion-item>
+                        </ion-list>
+                        
+                  
+                  
+                </ion-list>
+          </ion-col>
+        </ion-row>
+
+        <ion-row  class="border">
+           
+            <ion-col>
+               
+                <button ion-button large (click)="leftButtonClicked()">
+                    &nbsp; Links&nbsp; &nbsp;  
+                  </button>
+                  <br>
+            </ion-col>
+            <ion-col >
+                <ion-buttons center> 
+                <button ion-button  large color="danger" (click)="stopButtonClicked()">
+                    &emsp;&nbsp; Stop &emsp;&nbsp; 
+                  </button>
+                </ion-buttons>
+                  <br>
+            </ion-col>
+
+          <ion-col >
+              <ion-buttons end>
+                <button ion-button large (click)="rightButtonClicked()">
+                    Rechts
+                </button>
+              </ion-buttons>
+                   <br>  
+                
+                
+            </ion-col>
+           
+          </ion-row>
+  
+      </ion-grid>
+
+
+
+
+
+  <ion-item>
+    {{motorSpeed}}
+    <ion-range min="30" max="254" pin="true" color="secondary" 
+            [(ngModel)]="motorSpeed" (ionChange)="motorSpeedChange($event)">
+      <ion-label range-left>30%</ion-label>
+      <ion-label range-right>100%</ion-label>
+    </ion-range>
+  </ion-item>
+
+
+</ion-content>
+
+<body ng-app="starter" ng-controller="MainCtrl">
+   
+
+</body>
+
+
+
+
+
+
+
+
+<!--
 <ion-header>
 
   <ion-navbar>
@@ -16,3 +174,4 @@
 <ion-content padding>
 
 </ion-content>
+-->

@@ -22,8 +22,9 @@ export class WebsocketServiceProvider {
 
   ws: WebSocket;  
   
-  messages = [];
-  //myObservable;
+  //messages = [];
+
+  //myObservables;
   position: string;  // Actual Position value from Backend
   myPositionSubject;
 
@@ -37,7 +38,7 @@ export class WebsocketServiceProvider {
 
 //  constructor(public alertCtrl: AlertController) {
     constructor() {
-      console.log('Hello WebsocketServiceProvider Provider');
+      console.log('Hi from WebsocketServiceProvider (WS)');
 //      this.ws = new WebSocket('ws://' + URL ,[]);
       this.ws = new WebSocket('ws://10.0.0.175' ,[]);
       this.initListeners();
@@ -58,14 +59,6 @@ export class WebsocketServiceProvider {
     return this.myWsOpenSubject;
   }
 
-
-  // GEHT NICHT OHNE Alertcontroller, gibts aber nicht
-  showAlert(code, message) {
-    const alert = this.alertCtrl.create({
-      title: 'ERROR --' + code, subTitle: message, buttons: ['OK']
-    });
-    alert.present();
-  }
 
   startCheckSocketLiveStatus() { // broken connection is not detected by eventlistener (close) until a packet is sent
     var that=this;
@@ -108,13 +101,13 @@ export class WebsocketServiceProvider {
   }
 
   public initListeners() { //
-    console.log ("EventListenersInit");
+    console.log ("WS.EventListenersInit");
 
     this.ws.addEventListener('open', event => {
       console.log("WS.open");
       this.wsOpen = true;
       this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
-      this.messages.push({content: "Rotor Connected"});        
+      //this.messages.push({content: "Rotor Connected"});        
     });
 
     this.ws.addEventListener('message', event => {
@@ -125,7 +118,7 @@ export class WebsocketServiceProvider {
       var reply = jsonObj["reply"];
 
       if (reply !== undefined) {  // data arrived
-        console.log("reply --> " + reply);
+        //console.log("reply --> " + reply);
         if (reply == "OK") {
           // schön, aber was tun außer freuen ??
         }
@@ -147,7 +140,7 @@ export class WebsocketServiceProvider {
       console.log("WS.close");
       this.wsOpen = false;
       this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
-      this.messages.push({content: "You have been disconnected"});
+      //this.messages.push({content: "You have been disconnected"});
     });
 
     this.ws.addEventListener('error', event => {
@@ -159,6 +152,15 @@ export class WebsocketServiceProvider {
       this.ws.close();
   }
 
+
+  
+  // GEHT NICHT OHNE Alertcontroller, gibts aber nicht
+  showAlert(code, message) {
+    const alert = this.alertCtrl.create({
+      title: 'ERROR --' + code, subTitle: message, buttons: ['OK']
+    });
+    alert.present();
+  }
 
 
 //################################ Observer ##########################  geht alles nicht

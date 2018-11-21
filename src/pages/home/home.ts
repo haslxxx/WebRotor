@@ -2,19 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
 import { WebsocketServiceProvider } from '../../providers/websocket-service/websocket-service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
 
-import {Observable } from 'rxjs/Observable';
+import { Observer } from 'observer';
 import {Subject} from 'rxjs/Subject';
-
-//import * as $ from "jquery";
-//import { timerangewheel } from "../../assets/js/wheelplugin.js"
-//import * as $1 from "../../assets/js/wheelplugin.js"
-
-//import { google } from "../../assets/js/loader.js";
-
-//import { Socket } from 'ng-socket-io';
-//import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 @Component({
   selector: 'page-home',
@@ -22,7 +12,6 @@ import {Subject} from 'rxjs/Subject';
 })
 
 export class HomePage {
-
   jsonX: string;
   onButtonON: boolean = true;
   remoteChecked: boolean = false;
@@ -162,3 +151,7 @@ export class HomePage {
 
 
 } // end Class
+
+
+
+
