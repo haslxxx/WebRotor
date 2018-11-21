@@ -18,23 +18,46 @@ import { AlertController } from 'ionic-angular';
 @Injectable()
 export class WebsocketServiceProvider {
 
+  URL: string = '10.0.0.175';
+
   ws: WebSocket;  
-  position: string ;
+  
   messages = [];
-  myObservable;
-  mySubject;
+  //myObservable;
+  position: string;  // Actual Position value from Backend
+  myPositionSubject;
+
+  wsOpen: boolean = false;  // WS connection open/closed
+  myWsOpenSubject;
+
+  wsConnectionActivity: boolean = false;
+
+  // TODO  zum funktionieren bringen
   alertCtrl: AlertController;
 
 //  constructor(public alertCtrl: AlertController) {
     constructor() {
       console.log('Hello WebsocketServiceProvider Provider');
-    this.ws = new WebSocket('ws://10.0.0.175',[]);
-    this.initListeners();
-    this.mySubject  = new Subject();
-    this.myObservable = new Observable();
+//      this.ws = new WebSocket('ws://' + URL ,[]);
+      this.ws = new WebSocket('ws://10.0.0.175' ,[]);
+      this.initListeners();
+      this.myPositionSubject  = new Subject();
+      this.myWsOpenSubject  = new Subject();
+
+      this.startCheckSocketLiveStatus();
+//      this.myObservable = new Observable();
 //    this.alertCtrl = new AlertController();  will irgendwelche parameter die ich nicht kenne
 //    this.subscribeObservable();
   }
+  
+  public getPositionSubject() {
+    return this.myPositionSubject;
+  }
+
+  public  getWsOpenSubject() {
+    return this.myWsOpenSubject;
+  }
+
 
   // GEHT NICHT OHNE Alertcontroller, gibts aber nicht
   showAlert(code, message) {
@@ -44,25 +67,58 @@ export class WebsocketServiceProvider {
     alert.present();
   }
 
+  startCheckSocketLiveStatus() { // broken connection is not detected by eventlistener (close) until a packet is sent
+    var that=this;
+    setInterval(function () { 
+      if (!that.wsConnectionActivity) {     // connection was not used lately   
+        if (that.wsOpen) {
+          that.sendMessage("{\"cmd\":\"ALIVETEST\"}");
+        }          
+      } else {that.wsConnectionActivity = false}; // connection was used lately anyway
+    }, 30000); //every 30 seconds
+  }
+
 
   public sendMessage = function(message){
       this.ws.send(message);
+      this.wsConnectionActivity = true; // to inhibit the alive test
   };
 
-/*
-  handleParseError(event) {
-    console.log("PARSE ERROR " + event);
+  public openWebSocket() {
+    console.log("WS: connect attempt " + this.ws);
+    if (this.ws == undefined) {
+      console.log("WS: connect attempt");
+//      this.ws = new WebSocket('ws://' + URL,[]);// etwas umständlich .. aber es gibt kein  ws.open  oder ws.connect
+      this.ws = new WebSocket('ws://10.0.0.175',[]);// etwas umständlich .. aber es gibt kein  ws.open  oder ws.connect
+      this.initListeners();
+      this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
+    }
   }
-*/
+
+  public closeWebSocket() {
+    if (this.ws != undefined) {
+      this.ws.close();
+      this.ws = undefined; // etwas umständlich .. aber es gibt kein  ws.open  oder ws.connect
+      this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
+    }
+  }
+
+  public getWsStatus() {
+    return this.wsOpen;
+  }
+
   public initListeners() { //
     console.log ("EventListenersInit");
 
     this.ws.addEventListener('open', event => {
       console.log("WS.open");
+      this.wsOpen = true;
+      this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
       this.messages.push({content: "Rotor Connected"});        
     });
 
     this.ws.addEventListener('message', event => {
+      this.wsConnectionActivity = true; // to inhibit the alive test
       console.log("WS.message " + event.data);
       // TODO  errorhandling für JSON.parse  .. falls ein ungültiger json kommt
       var jsonObj = JSON.parse(event.data);
@@ -77,28 +133,20 @@ export class WebsocketServiceProvider {
           var code = jsonObj["code"];
           var text = jsonObj["text"];
 //          this.showAlert(code, text); // TODO zum funktionieren bringen
+          alert("ERROR -" + code + "- " + text); // so gehts auch !
         }
       }
       var bearing = jsonObj["bearing"];
       if (bearing !== undefined) {  // data arrived
         this.position = bearing;
-        this.mySubject.next(this.position);
-      }
-
-      //this.position = event.data;
-      //################### SUBJECT #########################
-      
-      //################ Observer ###############  Geht nicht 
-/*      
-      this.myObservable.create(observer => {
-        observer.next(this.position);
-      });
-*/    // this.myObservable.next(this.position);
-  
+        this.myPositionSubject.next(this.position); //send Observable data
+      }  
     });
 
     this.ws.addEventListener('close', event => {
       console.log("WS.close");
+      this.wsOpen = false;
+      this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
       this.messages.push({content: "You have been disconnected"});
     });
 
@@ -115,6 +163,7 @@ export class WebsocketServiceProvider {
 
 //################################ Observer ##########################  geht alles nicht
 // Neue versuche mit  RxJS
+/*
   public subscribeObservable() {
 
     this.myObservable.create(observer => {
@@ -127,7 +176,7 @@ export class WebsocketServiceProvider {
   public getObserverObject() {
     return this.myObservable;
   }
-
+/*
 //################### SUBJECT #########################  funktioniert wunderbar
   //mySubject = new Subject();  -->   Nach Oben (konstruktor) gewandert !
   /*
@@ -139,10 +188,6 @@ export class WebsocketServiceProvider {
     this.mySubject.next(this.position); -->   Nach Oben gewandert (wo die daten entstehen .. onMessage) !
   }
   */
-
-  public getSubjectObject() {
-    return this.mySubject;
-  }
 
 
 }

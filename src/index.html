@@ -21,8 +21,56 @@
   script-src * 'self' 'unsafe-inline' 'unsafe-eval';
   connect-src * ;">
 
+
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
+
+  <!--  #############  MY INCLUDES #############-->
+
+  <!--  https://github.com/jpweinerdev/timerangewheelslider -->
+  <!-- <script src="assets/js/wheelparam.js"></script>  -->
+
+  <!--
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  comment out !   <script src="assets/js/wheelplugin.js"></script>  
+  <script src="assets/js/wheelplugin.min.js"></script>
+-->
+  <!-- testweises ausgeben einer variablen im app.components.ts die aber aus dem testjs.js kommt -->
+  <script src="assets/js/testjs.js"></script>
+
+  <!--  #############  MY INCLUDES END #############-->
+  
+
+  
+    <!--  #############  MY INCLUDES #############  -->
+    <script type="text/javascript" src="assets/js/loader.js"></script>
+    <!-- 
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+  
+        var options = {
+          title: 'My Daily Activities',
+          pieHole: 0.5,
+        };
+  
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+    -->
+    <!--  #############  MY INCLUDES END #############-->
+
 
   <!-- un-comment this code to enable service worker
   <script>
@@ -34,7 +82,8 @@
   </script>-->
 
   <link href="build/main.css" rel="stylesheet">
-
+  
+  
 </head>
 <body>
 

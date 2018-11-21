@@ -7,6 +7,8 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+//import { MainPage } from '../pages/main/main';
+import { WindrosePage } from '../pages/windrose/windrose';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -28,7 +30,8 @@ import { AlertController } from 'ionic-angular';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    WindrosePage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { AlertController } from 'ionic-angular';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    WindrosePage
   ],
   providers: [
     StatusBar,
