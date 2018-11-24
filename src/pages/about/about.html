@@ -7,6 +7,16 @@
 </ion-header>
 
 <ion-content padding>
+    <ion-item>
+        <ion-label stacked class="colorlabel"> IP-Adresse RotorBackend</ion-label>
+        <ion-input  type="text" class="bigfont" 
+                    [(ngModel)]="ipBackend"  (keypress)="ipChanged($event.keyCode)">
+        </ion-input>
+    </ion-item>
+    <ion-item>
+     
+    </ion-item>
   <div>der callsign picker könnte ein modal sein oder ein popover</div>
+
 
 </ion-content>

@@ -1,3 +1,16 @@
 page-home {
 
 }
+.overlaybox { position: relative !important; 
+    background: gray 
+}
+.overlaybox div { 
+    position: absolute  !important ;
+}
+
+#windrose {
+    background:rgb(167, 209, 121) !important; 
+    transform: rotate(30deg); 
+    transform: translate(0px,0px); 
+    opacity: 0.5 !important;
+}

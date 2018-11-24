@@ -3,8 +3,14 @@ import { NavController, AlertController } from 'ionic-angular';
 
 import { WebsocketServiceProvider } from '../../providers/websocket-service/websocket-service';
 
-import { Observer } from 'observer';
+
+//import { Observer } from 'observer';
 import {Subject} from 'rxjs/Subject';
+import { DomSanitizer } from '@angular/platform-browser';
+
+
+import { NgCircleProgressModule,  CircleProgressComponent} from 'ng-circle-progress';
+
 
 @Component({
   selector: 'page-home',
@@ -19,7 +25,17 @@ export class HomePage {
   position: String = "0";
 
   testhtml: string = '<div> das ist ein inner html text   </div>';
-  scripthtml: string = '<div> script <script>var testorello = "scripttest variable";  </script> </div>';
+  scripthtml  = 'javascript: testorello = "scripttest variable"';
+  scripthtmlSanitized;
+  
+  dangerousUrl = 'javascript:alert("Hi there")';
+  trustedUrl;
+
+  image = '../../assets/imgs/Unbenannt.PNG'; 
+  pfeil = '../../assets/imgs/PfeilUmriss.PNG'; 
+  degree= "195";
+  arrowrotation = 'translate(25px,25px) rotate(' + this.degree + 'deg)';
+  arrowcolor = "red";
 
   html: string = ' <div id="donutchart" style="width: 900px; height: 500px;"></div>  ';
   head: string = ' \
@@ -49,11 +65,24 @@ export class HomePage {
 ';
   
   wsp = new WebsocketServiceProvider();
+  //circle = new CircleProgressComponent();
+  percent: number = 30;
+  maxPercent = 254;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private sanitizer: DomSanitizer) {
     this.subscribeSubjects(); // ein Observer pattern
     //this.aBitJavaScript();
+    this.trustedUrl = sanitizer.bypassSecurityTrustResourceUrl(this.dangerousUrl) ;
+    this.scripthtmlSanitized = sanitizer.bypassSecurityTrustResourceUrl(this.scripthtml) ;
     this.loadChart();
+  }
+
+  getStyles(){
+    let typeScriptStyle = {
+    "color": "blue",
+    "font-size": "30px"
+    }
+    return typeScriptStyle;
   }
 
   loadChart() {
@@ -97,6 +126,12 @@ export class HomePage {
 
   setPosition(pos) {
     this.position = pos;
+  //  this.percent = pos / 10,24;
+    this.percent = 1;
+    this.degree = String(((pos /1024) *360)-90 );
+
+    // ENDLICH !  der rotierende Pfeil
+    this.arrowrotation = 'translate(62px,132px) rotate(' + this.degree + 'deg)';
   }
 
   setOnButton(val) {

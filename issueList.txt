@@ -1,0 +1,4 @@
+* anzeige ONbutton geht nicht, wenn man auf ON geht , websocket-service aber sofort feststellt, daß der socket nicht zu öffnen ist
+anzeige bleibt auf ON obwohl der parameter onButtonON auf false steht
+* einbettung von <script> im html code scheitert an sanitizer (für windrosenfunktion)
+* übergabe der IP von konfigseite (momentan about.ts) funktioniert nicht ?? Subject statt direktcall

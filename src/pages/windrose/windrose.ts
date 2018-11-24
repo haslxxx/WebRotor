@@ -3,7 +3,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { WebsocketServiceProvider } from '../../providers/websocket-service/websocket-service';
-
+//import { HomePage } from '../home/home';
 //import {Subject} from 'rxjs/Subject';
 
 
@@ -23,11 +23,21 @@ export class WindrosePage {
   positionGrad: String = "0"; // 0-360/450 degree
   positionRequested: string = "0"; // 0-360/450 degree
   wsp = new WebsocketServiceProvider();
-  image;
+  
+  percent: number = 30;
+  maxPercent = 254;
+
+  
+  image = '../../assets/imgs/Unbenannt.PNG'; 
+  pfeil = '../../assets/imgs/PfeilUmriss.png'; 
+  degree= "195";
+  arrowrotation = 'translate(25px,25px) rotate(' + this.degree + 'deg)';
+  arrowcolor = "red";
+
 
   constructor(public navCtrl: NavController) {
     this.subscribeSubjects(); // Subject ist ein Observer pattern
-    this.image = '../../assets/imgs/Unbenannt.PNG'; 
+
 //    this.image = 'https://randomuser.me/api/portraits/women/79.jpg';
   }
   
@@ -48,7 +58,6 @@ export class WindrosePage {
     console.log("PosNew " + this.positionRequested + "  code: " + keycode);
     if (keycode == 13) {  // ENTER pressed      
       if (this.positionRequested != this.positionGrad) {
-        //this.motorSpeed = parseInt(this.positionRequested);
         var pos1023 =  String(((parseInt(this.positionRequested)) * (1024/360)).toFixed(0));
         this.positionRequested2command(pos1023);
       }
@@ -60,7 +69,7 @@ export class WindrosePage {
   }
 
   motorSpeedChange(val) {
-    console.log("SpeedChange: " + val);
+    //console.log("SpeedChange: " + val);
     switch (val) {
       case 0: {
         break;
@@ -101,13 +110,26 @@ export class WindrosePage {
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"S\"}");
   }
 
+  /*
   setPosition(pos) {
     this.position = pos;
     this.positionGrad =  String((pos * (360/1024)).toFixed(0));
+    this.percent = ((pos / 1024) * 100).toFixed() ;
   }
+*/
 
+setPosition(pos) {
+  this.position = pos;
+  this.positionGrad =  String((pos * (360/1024)).toFixed(0));
+  this.percent = 1;
+  this.degree = String(((pos /1024) *360)-90 );
+
+  // ENDLICH !  der rotierende Pfeil
+  this.arrowrotation = 'translate(62px,132px) rotate(' + this.degree + 'deg)';
+}
   setOnButton(val) {
     this.onButtonON = val;
+    console.log("setOnButton: " + val);
   }
 
   myPositionSubject; 

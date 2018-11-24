@@ -4,8 +4,10 @@ import { Injectable } from '@angular/core';
 //import { HomePage } from '../../pages/home/home';
 
 //import { Observer } from 'observer';
-import {Observable } from 'rxjs/Observable';
+//import {Observable } from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+
+import {AboutPage} from '../../pages/about/about';
 
 import { AlertController } from 'ionic-angular';
 
@@ -18,9 +20,11 @@ import { AlertController } from 'ionic-angular';
 @Injectable()
 export class WebsocketServiceProvider {
 
-  URL: string = '10.0.0.175';
+//  URL: string = 'ws://10.0.0.175';
+  IP: string = '10.0.0.176';
 
   ws: WebSocket;  
+  
   
   //messages = [];
 
@@ -39,18 +43,30 @@ export class WebsocketServiceProvider {
 //  constructor(public alertCtrl: AlertController) {
     constructor() {
       console.log('Hi from WebsocketServiceProvider (WS)');
-//      this.ws = new WebSocket('ws://' + URL ,[]);
-      this.ws = new WebSocket('ws://10.0.0.175' ,[]);
+      this.ws = new WebSocket('ws://' + this.IP ,[]);
+//      this.ws = new WebSocket('ws://10.0.0.175' ,[]);
+//      this.ws = new WebSocket(this.URL ,[]);
       this.initListeners();
       this.myPositionSubject  = new Subject();
       this.myWsOpenSubject  = new Subject();
 
       this.startCheckSocketLiveStatus();
-//      this.myObservable = new Observable();
+
+      //this.subscribeSubjects(); // für IP übergabe ############################# KRAWUMM ################
+
+
 //    this.alertCtrl = new AlertController();  will irgendwelche parameter die ich nicht kenne
-//    this.subscribeObservable();
   }
   
+  // TODO #####################################
+  setIp(ip) {  // TODO funktioniert nicht (vermutlich weil about.ts eine andere instanz benutzt)
+    console.log("WS: received new IP: " + ip);
+    this.IP = ip;
+    // vorübergehend ausser kraft gesetzt    
+    //this.closeWebSocket;
+    // hier bräuchte man ein abwarten auf das close event
+    this.openWebSocket;
+  }
   public getPositionSubject() {
     return this.myPositionSubject;
   }
@@ -73,17 +89,21 @@ export class WebsocketServiceProvider {
 
 
   public sendMessage = function(message){
+    if(this.ws) {
       this.ws.send(message);
       this.wsConnectionActivity = true; // to inhibit the alive test
+    }
   };
 
   public openWebSocket() {
-    console.log("WS: connect attempt " + this.ws);
+    console.log("WS: connect attempt " + this.ws + "IP: " + this.IP);
     if (this.ws == undefined) {
       console.log("WS: connect attempt");
 //      this.ws = new WebSocket('ws://' + URL,[]);// etwas umständlich .. aber es gibt kein  ws.open  oder ws.connect
-      this.ws = new WebSocket('ws://10.0.0.175',[]);// etwas umständlich .. aber es gibt kein  ws.open  oder ws.connect
+      this.ws = new WebSocket('ws://' + this.IP ,[]);// etwas umständlich .. aber es gibt kein  ws.open  oder ws.connect
       this.initListeners();
+
+      console.log("WS: ON: " + this.wsOpen);
       this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
     }
   }
@@ -144,14 +164,29 @@ export class WebsocketServiceProvider {
     });
 
     this.ws.addEventListener('error', event => {
-        console.log("The socket had an error " + event);
+        console.log("WS.The socket had an error " + event);
+        this.wsOpen = false;
+        this.myWsOpenSubject.next(this.wsOpen); //send Observable data (to home.ts)
     });
   }
 
   public ngOnDestroy() {
-      this.ws.close();
+    console.log("WS.ngOnDestroy fired ");
+    this.ws.close();
   }
 
+
+
+  // ÜBERFLÜSSIG !!
+  /*
+  myIpSubject;
+  subscribeSubjects() { //das praktischere Observable
+    this.myIpSubject = this.aboutPage.getIpSubject();
+    this.myIpSubject.subscribe((data) => { 
+      this.setIp(data);
+    });
+  }
+*/
 
   
   // GEHT NICHT OHNE Alertcontroller, gibts aber nicht

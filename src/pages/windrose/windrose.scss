@@ -3,12 +3,13 @@ page-windrose {
 }
 
 .border {
-    background-color: lightgrey;
+    //background-color: lightgrey;
     border: solid black thin;
 }
 
 #windrose {
-    background-color: rgb(110, 170, 226);
+
+    opacity: 1 !important;
 }
 
 .bigfont {
@@ -19,4 +20,11 @@ page-windrose {
 .colorlabel {
     color: red !important ;
     font-size: 15px !important;
+}
+
+.overlaybox { 
+    position: relative !important;    
+}
+.overlaybox div{ 
+    position: absolute  !important ;
 }

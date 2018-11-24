@@ -23,6 +23,8 @@ import { AlertController } from 'ionic-angular';
 //const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 //const config: SocketIoConfig = { url: 'http://10.0.0.175:80', options: {} };
 
+import { NgCircleProgressModule } from 'ng-circle-progress';
+
 
 @NgModule({
   declarations: [
@@ -35,8 +37,20 @@ import { AlertController } from 'ionic-angular';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp) 
+    IonicModule.forRoot(MyApp),
     //SocketIoModule.forRoot(config)
+       // Specify ng-circle-progress as an import
+       NgCircleProgressModule.forRoot({
+        // set defaults here
+        radius: 100,
+        outerStrokeWidth: 16,
+        innerStrokeWidth: 8,
+        outerStrokeColor: "#78C000",
+        innerStrokeColor: "#C7E596",
+        animationDuration: 300,
+        
+      })
+  
   
   ],
   bootstrap: [IonicApp],

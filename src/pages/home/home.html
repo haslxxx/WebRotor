@@ -58,13 +58,84 @@
     </ion-range>
   </ion-item>
 
+
+  <!--
+  <div class="overlaybox" >
+      <div style="transform:translate(25px,25px) rotate(30deg); ">
+          <img width="300" height="300" 
+          [src]="pfeil" style=" background:rgb(167, 209, 121)"/>
+         
+      </div>
+  
+      <div style="    background:rgb(167, 209, 121) ; 
+      transform: rotate(30deg); 
+      transform: translate(0px,0px); 
+      opacity: 0.5 ">
+          <img width="300" height="300" 
+          [src]="image" style=" background:rgb(167, 209, 121)"/>
+      </div>
+    </div>
+    -->
+  
+    <!--
+  <div class="overlaybox" >
+    <div [ngStyle]='{ transform: homecolor} '
+   
+    >
+        <circle-progress
+            [percent]='percent'
+            [radius]="112"
+            [outerStrokeWidth]="15"
+            [innerStrokeWidth]="1"
+            [outerStrokeColor]="'rgb(235, 9, 47)'"
+            [innerStrokeColor]="'#C7E596'"
+            [animation]="false"
+            [maxPercent]='maxPercent'  >  
+        </circle-progress>
+    </div>
+
+    <div style="    background:rgb(167, 209, 121) ; 
+    transform: rotate(30deg); 
+    transform: translate(0px,0px); 
+    opacity: 0.5 ">
+        <img width="300" height="300" 
+        [src]="image" style=" background:rgb(167, 209, 121)"/>
+    </div>
+  </div>
+-->
+
+<div class="overlaybox" >
+    <div [ngStyle]='{ transform: arrowrotation} ' >
+      <img width="180" height="30" 
+      [src]="pfeil" [ngStyle]='{color: arrowcolor} '   /> 
+    </div>
+
+    <div style="    background:rgb(167, 209, 121) ; 
+    transform: rotate(30deg); 
+    transform: translate(0px,0px); 
+    opacity: 0.5 ">
+        <img width="300" height="300" 
+        [src]="image" style=" background:rgb(167, 209, 121)"/>
+    </div>
+  </div>
+
+
   <p>
-    .....
+    xx.....
   </p>
- 
-  <div   [innerHTML]="testhtml"> InnerHtml include nur text </div>
-  <div   [innerHTML]="scripthtml"> InnerHtml include script </div>
- <!--
+  
+  <h4>A trusted URL:</h4>
+  <p><a class="e2e-trusted-url" [href]="trustedUrl">Click me</a></p>
+
+
+  <h4>ScriptHtml:</h4>
+  <p><a class="e2e-trusted-url" [href]="scripthtmlSanitized">Click me</a></p>
+
+
+  <p><a   [innerHTML]="testhtml"> InnerHtml include nur text </a></p>
+<!--   
+  <div   [innerHTML]="scripthtmlSanitized"> InnerHtml include script </div>
+
   <div   [innerHTML]="html"> </div>
 -->
 

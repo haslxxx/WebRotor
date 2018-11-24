@@ -14,8 +14,8 @@
               <br>
             <ion-item >
               <ion-label>Rotor connected</ion-label>
-              <ion-toggle  color="secondary" checked="true" 
-                          [(ngModel)]="onButtonON"  (ionChange)="connectButtonChange()">
+              <ion-toggle  color="secondary" 
+              (ionChange)="connectButtonChange()"  [(ngModel)]="onButtonON" >
               </ion-toggle>              
             </ion-item>            
           </ion-col>
@@ -38,22 +38,44 @@
         </ion-row>
 
         <ion-row  justify-content-end  class="border">
-          <ion-col col-9>
-              <ion-item> 
-                <img width="300" height="300" 
-                  [src]="image" id="windrose"/> 
-              </ion-item> 
-              <ion-item>
+          <ion-col col-8>
 
-                  <ion-range disabled="true" pin="true" min="0" max="1023"  color="secondary"
-                          [(ngModel)]="position" >
-                    <ion-label range-left>0°</ion-label>
-                    <ion-label range-right>360°</ion-label>
-                  </ion-range>
-                </ion-item>
-              
+
+                <div class="overlaybox" >
+
+                    <div style="opacity: 1 " >
+                        <img width="300" height="300" 
+                        [src]="image" style=" background:rgb(167, 209, 121)"/>
+                    </div>
+
+                    <div [ngStyle]='{ transform: arrowrotation} ' style="opacity: 0.8 " >
+                      <img width="180" height="30" 
+                      [src]="pfeil" [ngStyle]='{color: arrowcolor} '   /> 
+                    </div>
+                
+                </div>
+<!--
+
+                <div class="overlaybox" >
+                    <div [ngStyle]='{ transform: arrowrotation} ' >
+                      <img width="180" height="30" 
+                      [src]="pfeil" [ngStyle]='{color: arrowcolor} '   /> 
+                    </div>
+                
+                    <div style="opacity: 0.5 ">
+                        <img width="300" height="300" 
+                        [src]="image" style=" background:rgb(167, 209, 121)"/>
+                    </div>
+                  </div>
+
+
+
+
+
+-->                
+
           </ion-col>
-          <ion-col col-3>
+          <ion-col col-4>
               <ion-list>
 
                   <ion-item>
@@ -74,7 +96,7 @@
 
                       <ion-list radio-group >
                           <ion-item>
-                              <ion-label stacked class="colorlabel">Motor<br>Speed</ion-label>
+                              <ion-label stacked class="colorlabel">Rotor<br>Speed</ion-label>
                             </ion-item>
                           
                         
