@@ -7,8 +7,8 @@ page-windrose {
     border: solid black thin;
 }
 
-#windrose {
-
+.windrose {
+    transform : translate(22px,106px) rotate(50deg) !important;
     opacity: 1 !important;
 }
 

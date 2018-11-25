@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 //import { MainPage } from '../pages/main/main';
 import { WindrosePage } from '../pages/windrose/windrose';
+import { CallsignsPage } from '../pages/callsigns/callsigns';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -33,7 +34,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     ContactPage,
     HomePage,
     TabsPage,
-    WindrosePage
+    WindrosePage,
+    CallsignsPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     ContactPage,
     HomePage,
     TabsPage,
-    WindrosePage
+    WindrosePage,
+    CallsignsPage
   ],
   providers: [
     StatusBar,

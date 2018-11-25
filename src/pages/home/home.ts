@@ -22,7 +22,7 @@ export class HomePage {
   onButtonON: boolean = true;
   remoteChecked: boolean = false;
   motorSpeed: number = 100;
-  position: String = "0";
+  position: String = "234";
 
   testhtml: string = '<div> das ist ein inner html text   </div>';
   scripthtml  = 'javascript: testorello = "scripttest variable"';
@@ -31,10 +31,15 @@ export class HomePage {
   dangerousUrl = 'javascript:alert("Hi there")';
   trustedUrl;
 
-  image = '../../assets/imgs/Unbenannt.PNG'; 
-  pfeil = '../../assets/imgs/PfeilUmriss.PNG'; 
+  image = '../../assets/imgs/Windrose.png'; 
+  // Typ A  pfeil = '../../assets/imgs/PfeilUmrissRot.png'; 
+  // Typ B  pfeil = '../../assets/imgs/PfeilTransparent.png'; 
+  pfeil = '../../assets/imgs/PfeilTransparent.png'; 
+
+
   degree= "195";
   arrowrotation = 'translate(25px,25px) rotate(' + this.degree + 'deg)';
+  arrowrotationSanitized;
   arrowcolor = "red";
 
   html: string = ' <div id="donutchart" style="width: 900px; height: 500px;"></div>  ';
@@ -75,6 +80,7 @@ export class HomePage {
     this.trustedUrl = sanitizer.bypassSecurityTrustResourceUrl(this.dangerousUrl) ;
     this.scripthtmlSanitized = sanitizer.bypassSecurityTrustResourceUrl(this.scripthtml) ;
     this.loadChart();
+    console.log("WindrosePage constructor !");
   }
 
   getStyles(){
@@ -83,6 +89,11 @@ export class HomePage {
     "font-size": "30px"
     }
     return typeScriptStyle;
+  }
+
+  ionViewDidLoad() {
+    console.log("WindrosePage did load !");
+    this.setPosition('350'); //Irgendeine initialposition
   }
 
   loadChart() {

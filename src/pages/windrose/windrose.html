@@ -1,163 +1,141 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>WEB Rotor  PRODUCTION PAGE</ion-title>
+    <ion-title>WEB Rotor</ion-title>
   </ion-navbar>
-  <!--   
-  <div   [innerHTML]="head"></div>
- --> 
 </ion-header>
 
 <ion-content padding>
-    <ion-grid>
-        <ion-row justify-content-start class="border">
-          <ion-col col-5>
-              <br>
-            <ion-item >
-              <ion-label>Rotor connected</ion-label>
-              <ion-toggle  color="secondary" 
-              (ionChange)="connectButtonChange()"  [(ngModel)]="onButtonON" >
-              </ion-toggle>              
-            </ion-item>            
-          </ion-col>
-          <ion-col col-3>
-              <br>
-            <ion-item>2 of 3</ion-item>
-            
-          </ion-col>
-          <ion-col col-4>
-              <br>
-                
-    <ion-item>
-      <ion-label  >Remote Enable</ion-label>
-      <ion-checkbox  item-right [(ngModel)]="remoteChecked" (click)="remoteAllowChange()"></ion-checkbox>
-    </ion-item>
+  <ion-grid>
+    <ion-row justify-content-start class="border">
+      <ion-col col-5>
+        <br>
+        <ion-item >
+          <ion-label>Rotor connected</ion-label>
+          <ion-toggle  color="secondary" 
+          (ionChange)="connectButtonChange()"  [(ngModel)]="onButtonON" >
+          </ion-toggle>              
+        </ion-item>            
+      </ion-col>
+
+      <ion-col col-3>
+        <br>
+        <ion-item>2 of 3</ion-item>           
+      </ion-col>
+
+      <ion-col col-4>
+        <br>                
+        <ion-item>
+          <ion-label  >Remote Enable</ion-label>
+          <ion-checkbox  item-right [(ngModel)]="remoteChecked" (click)="remoteAllowChange()"></ion-checkbox>
+        </ion-item>
+        <br>
+      </ion-col>
+    </ion-row>
+
+    <ion-row  justify-content-end  class="border">
+      <ion-col col-8>
+        <div class="overlaybox" >
+          <div style="opacity: 1 " >
+              <img width="300" height="300" 
+              [src]="rose" />
+          </div>
+<!--  TYP A
+          <div [ngStyle]='{ transform: arrowrotation} ' style="opacity: 0.8 " >
+            <img width="180" height="30" 
+            [src]="pfeil"  /> 
+          </div>     
+      TYP B   
+          <div [ngStyle]='{ transform: arrowrotation} ' style="opacity: 1 " >
+            <img width="250" height="90" 
+            [src]="pfeil"  /> 
+          </div>     
   
-             
-              <br>
-          </ion-col>
-        </ion-row>
+          <div [ngStyle]='setStyles()' >
+            <img width="250" height="90" 
+            [src]="pfeil"  /> 
+          </div>     
 
-        <ion-row  justify-content-end  class="border">
-          <ion-col col-8>
+          <div class="windrose" >   !!! DAS GEHT AUCH AM TABLET obwohl die gelbe meldung im debugger auch kommt
+            <img width="250" height="90" 
+            [src]="pfeil"  /> 
+          </div>     
 
+-->
 
-                <div class="overlaybox" >
-
-                    <div style="opacity: 1 " >
-                        <img width="300" height="300" 
-                        [src]="image" style=" background:rgb(167, 209, 121)"/>
-                    </div>
-
-                    <div [ngStyle]='{ transform: arrowrotation} ' style="opacity: 0.8 " >
-                      <img width="180" height="30" 
-                      [src]="pfeil" [ngStyle]='{color: arrowcolor} '   /> 
-                    </div>
-                
-                </div>
-<!--
-
-                <div class="overlaybox" >
-                    <div [ngStyle]='{ transform: arrowrotation} ' >
-                      <img width="180" height="30" 
-                      [src]="pfeil" [ngStyle]='{color: arrowcolor} '   /> 
-                    </div>
-                
-                    <div style="opacity: 0.5 ">
-                        <img width="300" height="300" 
-                        [src]="image" style=" background:rgb(167, 209, 121)"/>
-                    </div>
-                  </div>
+          <div [attr.style] = 'arrowrotationSanitized' >
+            <img width="250" height="90" 
+            [src]="pfeil"  /> 
+          </div>     
 
 
+        </div>
+      </ion-col>
 
+      <ion-col col-4>
+        <ion-list>
+          <ion-item>
+            <ion-label stacked class="colorlabel">Aktuelle <br> Richtung</ion-label>                  
+            <ion-label class="bigfont">{{positionGrad}} °</ion-label>                    
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        
+          <ion-item>
+            <ion-label stacked class="colorlabel"> SOLLeingabe</ion-label>
+            <ion-input type="text" class="bigfont" [(ngModel)]="positionRequested"  (keypress)="positionRequestedChanged($event.keyCode)"></ion-input>
+          </ion-item>
 
+          <ion-list radio-group >
+            <ion-item>
+              <ion-label stacked class="colorlabel">Rotor<br>Speed</ion-label>
+            </ion-item>
 
--->                
+            <ion-item>
+              <ion-label>Langsam</ion-label>
+              <ion-radio  value="40"(click)="motorSpeedChange(1)"></ion-radio>
+            </ion-item>
+          
+            <ion-item>
+              <ion-label>Mittel</ion-label>
+              <ion-radio value="70" checked="true" (click)="motorSpeedChange(2)"></ion-radio>
+            </ion-item>
+          
+            <ion-item>
+              <ion-label>Schnell</ion-label>
+              <ion-radio value="100" (click)="motorSpeedChange(3)"></ion-radio>
+            </ion-item>
+          </ion-list>                           
+        </ion-list>
+      </ion-col>
+    </ion-row>
 
-          </ion-col>
-          <ion-col col-4>
-              <ion-list>
+    <ion-row  class="border">           
+      <ion-col>              
+          <button ion-button large (click)="leftButtonClicked()">
+              &nbsp; Links&nbsp; &nbsp;  
+            </button>
+            <br>
+      </ion-col>
 
-                  <ion-item>
-                    <ion-label stacked class="colorlabel">Aktuelle <br> Richtung</ion-label>
-                  
-                    <ion-label class="bigfont">{{positionGrad}} °</ion-label>
-                    
-                    <ion-input type="text"></ion-input>
-                  </ion-item>
-                
-                  <ion-item>
-                    <ion-label stacked class="colorlabel"> SOLLeingabe</ion-label>
-                    <ion-input type="text" class="bigfont" [(ngModel)]="positionRequested"  (keypress)="positionRequestedChanged($event.keyCode)"></ion-input>
-                  </ion-item>
+      <ion-col >
+          <ion-buttons center> 
+          <button ion-button  large color="danger" (click)="stopButtonClicked()">
+              &emsp;&nbsp; Stop &emsp;&nbsp; 
+            </button>
+          </ion-buttons>
+            <br>
+      </ion-col>
 
-                  
-                      
+      <ion-col >
+          <ion-buttons end>
+            <button ion-button large (click)="rightButtonClicked()">
+                Rechts
+            </button>
+          </ion-buttons>
+          <br>       
+      </ion-col>           
+    </ion-row>
 
-                      <ion-list radio-group >
-                          <ion-item>
-                              <ion-label stacked class="colorlabel">Rotor<br>Speed</ion-label>
-                            </ion-item>
-                          
-                        
-                          <ion-item>
-                            <ion-label>Langsam</ion-label>
-                            <ion-radio  value="40"(click)="motorSpeedChange(1)"></ion-radio>
-                          </ion-item>
-                        
-                          <ion-item>
-                            <ion-label>Mittel</ion-label>
-                            <ion-radio value="70" checked="true" (click)="motorSpeedChange(2)"></ion-radio>
-                          </ion-item>
-                        
-                          <ion-item>
-                            <ion-label>Schnell</ion-label>
-                            <ion-radio value="100" (click)="motorSpeedChange(3)"></ion-radio>
-                          </ion-item>
-                        </ion-list>
-                        
-                  
-                  
-                </ion-list>
-          </ion-col>
-        </ion-row>
-
-        <ion-row  class="border">
-           
-            <ion-col>
-               
-                <button ion-button large (click)="leftButtonClicked()">
-                    &nbsp; Links&nbsp; &nbsp;  
-                  </button>
-                  <br>
-            </ion-col>
-            <ion-col >
-                <ion-buttons center> 
-                <button ion-button  large color="danger" (click)="stopButtonClicked()">
-                    &emsp;&nbsp; Stop &emsp;&nbsp; 
-                  </button>
-                </ion-buttons>
-                  <br>
-            </ion-col>
-
-          <ion-col >
-              <ion-buttons end>
-                <button ion-button large (click)="rightButtonClicked()">
-                    Rechts
-                </button>
-              </ion-buttons>
-                   <br>  
-                
-                
-            </ion-col>
-           
-          </ion-row>
-  
-      </ion-grid>
-
-
-
-
+  </ion-grid>
 
   <ion-item>
     {{motorSpeed}}
@@ -168,32 +146,7 @@
     </ion-range>
   </ion-item>
 
-
 </ion-content>
 
-<body ng-app="starter" ng-controller="MainCtrl">
-   
-
+<body ng-app="starter" ng-controller="MainCtrl">   
 </body>
-
-
-
-
-
-
-
-
-<!--
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>windrose</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
--->
