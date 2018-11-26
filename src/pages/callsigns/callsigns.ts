@@ -76,10 +76,13 @@ export class CallsignsPage {
     console.log("CSP: save clicked " + callsign.call);
 //    this.callsigns.push({call: callsign.call, bearing: callsign.bearing, remark:callsign.remark});
 //    this.storage.saveCall(callsign, this.isNewItem);
-    this.storage.saveCall({call: callsign.call, bearing: callsign.bearing, remark:callsign.remark}, this.isNewItem);
+    if (this.isNewItem) {
+//      this.storage.saveCall(callsign, this.isNewItem); 
+      this.storage.saveCall({call: callsign.call, bearing: callsign.bearing, remark:callsign.remark}, this.isNewItem); // pass new Object w/ object data
+    } else {
+      this.storage.saveCall(callsign, this.isNewItem); //pass on Object (for deleting old version)
+    }    
     this.show = false;
-
-
   }
 
 

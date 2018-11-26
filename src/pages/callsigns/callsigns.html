@@ -46,35 +46,46 @@
 
 
 
-      <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>   
-      <ion-list-header> Das ist ein listenheader</ion-list-header>
-      <ion-card>
-    <ion-list>
+      <ion-searchbar *ngIf="!show" (ionInput)="onSearch($event)"></ion-searchbar>   
+      
 
+      <ion-card *ngIf="!show" >
+        <ion-list >
+          <ion-list-header>    
+              <ion-row>
+                  <ion-col col-3> Rufzeichen</ion-col>          
+                  <ion-col col-2 >Richtung</ion-col>
+                  <ion-col col-4 >Bemerkung </ion-col>
+                  <ion-col col-3>                    
+                  </ion-col>
+                </ion-row>
+          </ion-list-header>
 
-  
-        <ion-item-sliding *ngFor="let callsign of callsigns"  >
-
-          <ion-item text-wrap>
-            <ion-row>
-              <ion-col col-3  (click)="callSelected($event, callsign)" class="bigCall"> <b>{{callsign.call}}</b>   </ion-col>          
-              <ion-col col-1 >{{callsign.bearing}} </ion-col>
-              <ion-col col-5 >{{callsign.remark}}  </ion-col>
-              <ion-col col-3>                    
-                <button ion-button  small color="light" (click)="callEdit(callsign)">
-                  <ion-icon name="create"></ion-icon>
-                </button>
-                <button ion-button small color="danger" (click)="callDelete(callsign)">
-                    <ion-icon name="trash"></ion-icon>
-                </button>         
-              </ion-col>
     
-            </ion-row>
-          </ion-item>
+          <ion-item-sliding *ngFor="let callsign of callsigns"  >
 
-        </ion-item-sliding>
+            <ion-item text-wrap>
+              <ion-card>
+              <ion-row>
+                <ion-col col-3  (click)="callSelected($event, callsign)" class="bigCall"> <b>{{callsign.call}}</b>   </ion-col>          
+                <ion-col col-1 >{{callsign.bearing}} </ion-col>
+                <ion-col col-5 >{{callsign.remark}}  </ion-col>
+                <ion-col col-3 >                    
+                  <button ion-button small color="secondary" (click)="callEdit(callsign)">
+                    <ion-icon name="create"></ion-icon>
+                  </button>
+                  <button ion-button small color="danger" (click)="callDelete(callsign)">
+                      <ion-icon name="trash"></ion-icon>
+                  </button>         
+                </ion-col>
+      
+              </ion-row>
+              </ion-card>
+            </ion-item>
 
-      </ion-list>
-    </ion-card>
+          </ion-item-sliding>
+
+        </ion-list>
+      </ion-card>
   
 </ion-content>
