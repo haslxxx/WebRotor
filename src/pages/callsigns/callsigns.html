@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title id="list-title">Callsign Richtungen</ion-title>
+    <ion-title id="list-title">Rufzeichen Richtungen Bearbeiten</ion-title>
 
     <ion-buttons end>
 <!--        <button ion-fab mini color="secondary" (click)="newClicked()">+</button> -->
@@ -46,11 +46,13 @@
 
 
 
-    
+      <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>   
+      <ion-list-header> Das ist ein listenheader</ion-list-header>
+      <ion-card>
     <ion-list>
-        <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>
 
 
+  
         <ion-item-sliding *ngFor="let callsign of callsigns"  >
 
           <ion-item text-wrap>
@@ -73,6 +75,6 @@
         </ion-item-sliding>
 
       </ion-list>
-    
+    </ion-card>
   
 </ion-content>

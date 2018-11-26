@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageProvider, Callsign } from '../../providers/storage/storage';
 
-//import { WindrosePage } from '../windrose/windrose';
-
 
 @IonicPage()
 @Component({
@@ -18,17 +16,15 @@ export class CallsignsPage {
   isNewItem: boolean = false;  //distinguish between add and edit
 
 //  constructor(public navCtrl: NavController, public storage: StorageProvider, public windrosePage: WindrosePage) {
-  constructor(public navCtrl: NavController, public storage: StorageProvider, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public storage: StorageProvider) {
       console.log("Hi CallsignPage (CSP)");
-//    this.getCallsignData();
+    this.getCallsignData();
     this.subscribeSubjects(); 
     this.initCallToEdit();
   }
 
   ionViewDidLoad() {
     console.log('CSP: ionViewDidLoad CallsignsPage');
-    var bearing: String = this.navParams.get('bearing');
-    console.log("CSP: navParams bearing: " + bearing);
   }
 
   initCallToEdit() {
@@ -37,12 +33,12 @@ export class CallsignsPage {
     this.callToEdit.remark = "333";
   }
 
-  /*
+
   getCallsignData() {
     this.callsigns = this.storage.getCallArray();
     console.log("CallsignData "  + this.callsigns);  // !! asynchron daten  --> observable nötig !!!
   }
-*/
+
   newClicked() {
     console.log("CSP: new clicked");
     this.show = true;
@@ -79,8 +75,8 @@ export class CallsignsPage {
   saveClicked(callsign) {
     console.log("CSP: save clicked " + callsign.call);
 //    this.callsigns.push({call: callsign.call, bearing: callsign.bearing, remark:callsign.remark});
-    this.storage.saveCall(callsign, this.isNewItem);
-//    this.storage.saveCall({call: callsign.call, bearing: callsign.bearing, remark:callsign.remark}, this.isNewItem);
+//    this.storage.saveCall(callsign, this.isNewItem);
+    this.storage.saveCall({call: callsign.call, bearing: callsign.bearing, remark:callsign.remark}, this.isNewItem);
     this.show = false;
 
 

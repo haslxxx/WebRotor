@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-grid>
+  <ion-grid *ngIf="!showCallsigns">
     <ion-row justify-content-start class="border">
       <ion-col col-5>
         <br>
@@ -67,9 +67,12 @@
             [src]="pfeil"  /> 
           </div>     
 
+         
+
           
 
         </div>
+      
       </ion-col>
 
       <ion-col col-4>
@@ -137,21 +140,24 @@
     </ion-row>
 
     <ion-row>
-      <ion-col>
+      <ion-col col-6>
           <ion-buttons>
               <button ion-button large (click)="gotoStationClicked()">
                   Goto Station
               </button>
+              
             </ion-buttons>
   
 
       </ion-col>
-
-
+      <ion-col col-5>
+      
+          <div class="mediumfont"> Actually heading to Call: &nbsp; <b>{{headingToCall}}</b></div>
+      </ion-col>
     </ion-row>
 
   </ion-grid>
-
+<!--
   <ion-item>
     {{motorSpeed}}
     <ion-range min="30" max="254" pin="true" color="secondary" 
@@ -160,6 +166,38 @@
       <ion-label range-right>100%</ion-label>
     </ion-range>
   </ion-item>
+-->
+
+  <ion-list *ngIf="showCallsigns">
+      <ion-row>
+        <ion-col col-10>
+            <ion-title color="primary" >Stationsauswahl</ion-title>
+        </ion-col>
+
+        <ion-col col-2>
+          <button ion-button end small color="danger" (click)="stationListExit()">
+              <ion-icon name="backspace"></ion-icon>
+          </button>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>
+
+      <ion-item-sliding *ngFor="let callsign of callsigns"  >
+
+        <ion-item text-wrap>
+          <ion-row>
+            <ion-col col-3  (click)="callSelected($event, callsign)" class="bigCall"> <b>{{callsign.call}}</b>   </ion-col>          
+            <ion-col col-1 >{{callsign.bearing}} </ion-col>
+            <ion-col col-5 >{{callsign.remark}}  </ion-col>  
+          </ion-row>
+        </ion-item>
+
+      </ion-item-sliding>
+
+  </ion-list>
+
 
 </ion-content>
 

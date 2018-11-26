@@ -7,7 +7,7 @@ import { WebsocketServiceProvider } from '../../providers/websocket-service/webs
 //import {Subject} from 'rxjs/Subject';
 import { DomSanitizer } from '@angular/platform-browser';
 
-
+import { StorageProvider, Callsign } from '../../providers/storage/storage';
 
 
 @IonicPage()
@@ -39,10 +39,12 @@ export class WindrosePage {
   arrowrotation = ""; //'translate(25px,25px) rotate(' + this.arrowRotation + 'deg)';
   arrowrotationSanitized;
 
-  gotoStationBearing: String ="";
+  //gotoStationBearing: String ="";
+  showCallsigns: boolean = false;
+  callsigns: Array<Callsign>;
+  headingToCall: string = "---";
 
-
-  constructor(public navCtrl: NavController, private sanitizer: DomSanitizer) {
+  constructor(public navCtrl: NavController, private sanitizer: DomSanitizer , public storage: StorageProvider) {
     this.subscribeSubjects(); // Subject ist ein Observer pattern
     console.log("WindrosePage constructor !");
   }
@@ -61,12 +63,17 @@ export class WindrosePage {
     }
   }
 
+  degTo1024(deg:string){
+    return String(((parseInt(deg)) * (1024/360)).toFixed(0));
+  }
+
   positionRequestedChanged(keycode) {
     console.log("PosNew " + this.positionRequested + "  code: " + keycode);
     if (keycode == 13) {  // ENTER pressed      
       if (this.positionRequested != this.positionGrad) {
-        var pos1023 =  String(((parseInt(this.positionRequested)) * (1024/360)).toFixed(0));
-        this.positionRequested2command(pos1023);
+//        var pos1023 =  String(((parseInt(this.positionRequested)) * (1024/360)).toFixed(0));
+        var pos1023 = this.degTo1024(this.positionRequested);
+        this.positionRequested2command(pos1023, "---");
       }
     }
   }
@@ -101,29 +108,56 @@ export class WindrosePage {
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"M\",\"val\":\"" + this.motorSpeed    + "\"}" );
   }
 
-  positionRequested2command(pos) {
+
+  positionRequested2command(pos, call) {
+    this.headingToCall = call;
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"B\",\"val\":\"" + pos    + "\"}" );
   }
 
+
   leftButtonClicked() {  
+    this.headingToCall = "---";
     this.motorSpeedChange(0); //tun so als ob um wert zu übertragen
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"L\"}");
   }
   rightButtonClicked() {
+    this.headingToCall = "---";
     this.motorSpeedChange(0);
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"R\"}");
   }
   stopButtonClicked() {  
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"S\"}");
   }
-  gotoStationClicked() {
-    
+
+  gotoStationClicked() { // show stationlist for selection
+    this.callsigns = this.storage.getCallArray();
+    this.showCallsigns = true;
+  }
+  callSelected(event, callsign) { // user selected a station to turn antenna to
+    this.showCallsigns = false;
+    this.positionRequested = callsign.bearing;
+    this.positionRequested2command(this.degTo1024(callsign.bearing), callsign.call 	);
+  }
+  stationListExit() { //user exits station list without selection
+    this.showCallsigns = false;
   }
 
+  // #############  SUCHE
+  onSearch(ev: any) {
+    this.callsigns = this.storage.getCallArray();    //Ganze liste herstellen
+    const val = ev.target.value; //Suchstring aus der searchbar   
+    if (val && val.trim() != '') { // Wenn suchstring leer .. nix filtern
+      this.callsigns = this.callsigns.filter((item) => {
+        return (item.call.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
+  
+/*
   public setGotoStationBearing(bearing) {
     console.log("Goto Bearing received " + bearing);
   }
-
+*/
   imageOffset: number = -90;
   setPosition(pos) {
     this.position = pos;
