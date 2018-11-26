@@ -26,6 +26,11 @@ import { AlertController } from 'ionic-angular';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 
+import { IonicStorageModule } from '@ionic/storage';
+import { StorageProvider } from '../providers/storage/storage';
+
+//import {Subject} from 'rxjs/Subject';
+
 
 @NgModule({
   declarations: [
@@ -51,7 +56,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
         innerStrokeColor: "#C7E596",
         animationDuration: 300,
         
-      })
+      }),
+      IonicStorageModule.forRoot(),
+
   
   
   ],
@@ -70,7 +77,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler} ,
     WebsocketServiceProvider,
-    AlertController
+    AlertController,
+    StorageProvider
   ]
 })
 export class AppModule {}

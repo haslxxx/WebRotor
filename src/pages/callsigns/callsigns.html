@@ -1,18 +1,78 @@
-<!--
-  Generated template for the CallsignsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
+  <ion-toolbar>
+    <ion-title id="list-title">Callsign Richtungen</ion-title>
 
-  <ion-navbar>
-    <ion-title>callsigns</ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+<!--        <button ion-fab mini color="secondary" (click)="newClicked()">+</button> -->
+<!--        <button *ngIf="!show" ion-fab mini color="secondary" (click)="show = !show">{{show ? 'close' : '+'}}</button> -->
+      <button *ngIf="!show" ion-fab mini color="secondary" (click)="newClicked()">+</button>
+    </ion-buttons>
 
+    
+
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
+      <ion-title *ngIf="show"  color="secondary">Dateneingabe/änderung</ion-title>
 
+      <ion-card>
+        <ion-item *ngIf="show">
+            <ion-label color="primary" type="text" floating >Call</ion-label>
+            <ion-input [(ngModel)]  ="callToEdit.call"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="show">
+            <ion-label color="primary" type="text" floating >Richtung</ion-label>
+            <ion-input [(ngModel)]  ="callToEdit.bearing"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="show">
+            <ion-label color="primary" type="text" floating >Bemerkung</ion-label>
+            <ion-input [(ngModel)]  ="callToEdit.remark"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="show">
+            <button ion-button  small color="secondary" (click)="saveClicked(callToEdit)">
+                <ion-icon name="checkmark-circle"></ion-icon>
+            </button>
+            <button ion-button  small color="danger" (click)="discardEntryClicked()">
+                <ion-icon name="backspace"></ion-icon>
+            </button>
+        </ion-item>
+      </ion-card>
+ 
+
+
+
+
+
+
+    
+    <ion-list>
+        <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>
+
+
+        <ion-item-sliding *ngFor="let callsign of callsigns"  >
+
+          <ion-item text-wrap>
+            <ion-row>
+              <ion-col col-3  (click)="callSelected($event, callsign)" class="bigCall"> <b>{{callsign.call}}</b>   </ion-col>          
+              <ion-col col-1 >{{callsign.bearing}} </ion-col>
+              <ion-col col-5 >{{callsign.remark}}  </ion-col>
+              <ion-col col-3>                    
+                <button ion-button  small color="light" (click)="callEdit(callsign)">
+                  <ion-icon name="create"></ion-icon>
+                </button>
+                <button ion-button small color="danger" (click)="callDelete(callsign)">
+                    <ion-icon name="trash"></ion-icon>
+                </button>         
+              </ion-col>
+    
+            </ion-row>
+          </ion-item>
+
+        </ion-item-sliding>
+
+      </ion-list>
+    
+  
 </ion-content>

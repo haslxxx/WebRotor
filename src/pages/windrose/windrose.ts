@@ -8,6 +8,8 @@ import { WebsocketServiceProvider } from '../../providers/websocket-service/webs
 import { DomSanitizer } from '@angular/platform-browser';
 
 
+
+
 @IonicPage()
 @Component({
   selector: 'page-windrose',
@@ -36,6 +38,8 @@ export class WindrosePage {
   arrowRotation: String = "195";
   arrowrotation = ""; //'translate(25px,25px) rotate(' + this.arrowRotation + 'deg)';
   arrowrotationSanitized;
+
+  gotoStationBearing: String ="";
 
 
   constructor(public navCtrl: NavController, private sanitizer: DomSanitizer) {
@@ -111,6 +115,13 @@ export class WindrosePage {
   }
   stopButtonClicked() {  
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"S\"}");
+  }
+  gotoStationClicked() {
+    
+  }
+
+  public setGotoStationBearing(bearing) {
+    console.log("Goto Bearing received " + bearing);
   }
 
   imageOffset: number = -90;

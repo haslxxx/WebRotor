@@ -127,6 +127,10 @@ export class HomePage {
     this.motorSpeedChange();
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"L\"}");
   }
+  leftPressEvent($event) {  // GEHT NICHT ...leider
+    console.log("left pressed:" + $event.data);
+  }
+
   rightButtonClicked() {
     this.motorSpeedChange();
     this.wsp.sendMessage("{\"cmd\":\"ROTOR\",\"funct\":\"R\"}");
