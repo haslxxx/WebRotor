@@ -28,6 +28,9 @@ export class CallsignsPage {
   }
 
   initCallToEdit() {
+    // TODO  ... hier wird das zuletzt verwendete Objekt verändert: FEHLER: wenn zuerst Edit ausgeführt wird 
+    // ... und dann new, wird hier das letzte objekt (des edits verändert) ?? Lösung für storage letztes element für delete und neues element bei edit übergeben
+    
     this.callToEdit.call = "";
     this.callToEdit.bearing = "";
     this.callToEdit.remark = "";
