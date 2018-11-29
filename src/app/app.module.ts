@@ -31,6 +31,8 @@ import { StorageProvider } from '../providers/storage/storage';
 
 //import {Subject} from 'rxjs/Subject';
 
+import { WindroseTestComponent } from '../components/windrose-test/windrose-test';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { StorageProvider } from '../providers/storage/storage';
     HomePage,
     TabsPage,
     WindrosePage,
-    CallsignsPage
+    CallsignsPage,
+    WindroseTestComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { StorageProvider } from '../providers/storage/storage';
     HomePage,
     TabsPage,
     WindrosePage,
-    CallsignsPage
+    CallsignsPage,
+    WindroseTestComponent
   ],
   providers: [
     StatusBar,

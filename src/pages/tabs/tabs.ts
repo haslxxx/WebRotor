@@ -7,6 +7,8 @@ import { HomePage } from '../home/home';
 import { WindrosePage } from '../windrose/windrose';
 import { CallsignsPage } from '../callsigns/callsigns';
 
+import { WindroseTestComponent } from '../../components/windrose-test/windrose-test';
+
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -17,7 +19,8 @@ export class TabsPage {
   tab2Root = HomePage;
   tab3Root = AboutPage;
   tab4Root = CallsignsPage;
-  tab5Root = ContactPage;
+  //tab5Root = ContactPage;
+  tab5Root = WindroseTestComponent;
 
   constructor() {
 

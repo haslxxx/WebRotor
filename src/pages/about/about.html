@@ -1,22 +1,50 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      ideensammlung
+      Parameterverwaltung
     </ion-title>
   </ion-navbar>  
 </ion-header>
 
 <ion-content padding>
+  <ion-card>
     <ion-item>
         <ion-label stacked class="colorlabel"> IP-Adresse RotorBackend</ion-label>
         <ion-input  type="text" class="bigfont" 
                     [(ngModel)]="ipBackend"  (keypress)="ipChanged($event.keyCode)">
         </ion-input>
     </ion-item>
+
+
     <ion-item>
-     
+        <ion-label stacked class="colorlabel"> Hysterese Rotorposition</ion-label>
+        <ion-input  type="text" class="bigfont" 
+                    [(ngModel)]="ipBackend"  (keypress)="ipChanged($event.keyCode)">
+        </ion-input>
     </ion-item>
-  <div>der callsign picker könnte ein modal sein oder ein popover</div>
+
+    <ion-item>
+        <ion-label stacked class="colorlabel"> Rampe (Anfahrt/Stop)</ion-label>
+        <ion-input  type="text" class="bigfont" 
+                    [(ngModel)]="ipBackend"  (keypress)="ipChanged($event.keyCode)">
+        </ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label stacked class="colorlabel"> Gleichstrom/Asynchron -motor </ion-label>
+        <ion-input  type="text" class="bigfont" 
+                    [(ngModel)]="ipBackend"  (keypress)="ipChanged($event.keyCode)">
+        </ion-input>
+    </ion-item>
+    
+    <ion-item>
+        <ion-label stacked class="colorlabel"> paramter x</ion-label>
+        <ion-input  type="text" class="bigfont" 
+                    [(ngModel)]="ipBackend"  (keypress)="ipChanged($event.keyCode)">
+        </ion-input>
+    </ion-item>
+  </ion-card> 
+  <div></div>
 
 
 </ion-content>

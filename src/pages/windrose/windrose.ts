@@ -34,7 +34,7 @@ export class WindrosePage {
   rose = '../../assets/imgs/Windrose.png'; 
   // Typ A  pfeil = '../../assets/imgs/PfeilUmrissRot.png'; 
   // Typ B  pfeil = '../../assets/imgs/PfeilTransparent.png'; 
-  pfeil = '../../assets/imgs/PfeilTransparent.png'; 
+  pfeil = '../../assets/imgs/PfeilUmrissRot.gif'; 
   arrowRotation: String = "195";
   arrowrotation = ""; //'translate(25px,25px) rotate(' + this.arrowRotation + 'deg)';
   arrowrotationSanitized;
@@ -46,16 +46,16 @@ export class WindrosePage {
 
   constructor(public navCtrl: NavController, private sanitizer: DomSanitizer , public storage: StorageProvider) {
     this.subscribeSubjects(); // Subject ist ein Observer pattern
-    console.log("WindrosePage constructor !");
+    console.log('Hi from WindrosePage (WRP)');
   }
 
   ionViewDidLoad() {
-    console.log('Hi from WindrosePage');
+    console.log('WRP: WindrosePage did load');
     this.setPosition('350'); //Irgendeine initialposition
   }
 
   connectButtonChange() {
-    console.log("ON: " + this.onButtonON);
+    console.log("WRP: OnButton: " + this.onButtonON);
     if (this.onButtonON) { // switch on websocket connection
       this.wsp.openWebSocket();
     } else {
@@ -68,7 +68,7 @@ export class WindrosePage {
   }
 
   positionRequestedChanged(keycode) {
-    console.log("PosNew " + this.positionRequested + "  code: " + keycode);
+    console.log("WRP: PosNew " + this.positionRequested + "  code: " + keycode);
     if (keycode == 13) {  // ENTER pressed      
       if (this.positionRequested != this.positionGrad) {
 //        var pos1023 =  String(((parseInt(this.positionRequested)) * (1024/360)).toFixed(0));
@@ -79,11 +79,11 @@ export class WindrosePage {
   }
 
   remoteAllowChange() {
-    console.log("remote: " + this.remoteChecked);
+    console.log("WRP: remote: " + this.remoteChecked);
   }
 
   motorSpeedChange(val) {
-    //console.log("SpeedChange: " + val);
+    console.log("WRP: SpeedChange: " + val);
     switch (val) {
       case 0: {
         break;
@@ -93,7 +93,7 @@ export class WindrosePage {
         break;
       }
       case 2: {
-        console.log("SpeedChange70: " );
+//        console.log("WRP: SpeedChange70: " );
         this.motorSpeed = 180; //70%
         break;
       }
@@ -134,8 +134,10 @@ export class WindrosePage {
     this.showCallsigns = true;
   }
   callSelected(event, callsign) { // user selected a station to turn antenna to
+    console.log("WRP: call selected: " + callsign.call)
     this.showCallsigns = false;
     this.positionRequested = callsign.bearing;
+//    console.log("WRP: call selected: " + callsign.call)
     this.positionRequested2command(this.degTo1024(callsign.bearing), callsign.call 	);
   }
   stationListExit() { //user exits station list without selection
@@ -158,7 +160,8 @@ export class WindrosePage {
     console.log("Goto Bearing received " + bearing);
   }
 */
-  imageOffset: number = -90;
+//  imageOffset: number = -90;
+  imageOffset: number = 0;
   setPosition(pos) {
     this.position = pos;
     this.positionGrad =  String((pos * (360/1024)).toFixed(0));
@@ -168,7 +171,8 @@ export class WindrosePage {
     // ENDLICH !  der rotierende Pfeil
     // Typ A   this.arrowrotation = 'translate(62px,132px) rotate(' + this.arrowRotation + 'deg)';
     // Typ B this.arrowrotation = 'translate(22px,106px) rotate(' + this.arrowRotation + 'deg)'; // links/Rects  rauf/runter 
-    this.arrowrotation = 'transform: translate(22px,106px) rotate(' + this.arrowRotation + 'deg) !important'; // links/Rects  rauf/runter 
+//    this.arrowrotation = 'transform: translate(22px,106px) rotate(' + this.arrowRotation + 'deg) !important'; // links/Rects  rauf/runter 
+    this.arrowrotation = 'transform: translate(0px,0px) rotate(' + this.arrowRotation + 'deg) !important'; // links/Rects  rauf/runter 
     this.arrowrotationSanitized = this.sanitizer.bypassSecurityTrustStyle(this.arrowrotation) ;
   }
 

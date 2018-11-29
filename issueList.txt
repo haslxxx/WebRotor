@@ -1,4 +1,12 @@
 * anzeige ONbutton geht nicht, wenn man auf ON geht , websocket-service aber sofort feststellt, daß der socket nicht zu öffnen ist
 anzeige bleibt auf ON obwohl der parameter onButtonON auf false steht
-* einbettung von <script> im html code scheitert an sanitizer (für windrosenfunktion)
-* übergabe der IP von konfigseite (momentan about.ts) funktioniert nicht ?? Subject statt direktcall
+* SOLVED( Solution: PersonalSanitizer) einbettung von <script> im html code scheitert an sanitizer (für windrosenfunktion)
+* übergabe der IP von konfigseite (momentan about.ts) funktioniert nicht oder ?? Subject statt direktcall ?? @Input/@output
+* eingabe bei callsignVerwaltung: required für call und bearing,  bearing nur numerisch 0-359
+* Gesamte Parameterverwaltung incl. Backendcode
+* Statusanzeige incl. Backendcode
+* BAckend: Strategie für Wifi credentials usereingabe (BT oder Wifi accesspoint mit kleiner webpage)
+* Callsign.ts initCallToEdit() {
+    // TODO  ... hier wird das zuletzt verwendete Objekt verändert: FEHLER: wenn zuerst Edit ausgeführt wird 
+    // ... und dann new, wird hier das letzte objekt (des edits verändert) ?? Lösung für storage letztes element für delete und neues element bei edit übergeben
+*

@@ -9,25 +9,29 @@
     <ion-row justify-content-start class="border">
       <ion-col col-5>
         <br>
+        <ion-card>
         <ion-item >
-          <ion-label>Rotor connected</ion-label>
+          <ion-label>Rotor connect</ion-label>
           <ion-toggle  color="secondary" 
           (ionChange)="connectButtonChange()"  [(ngModel)]="onButtonON" >
           </ion-toggle>              
-        </ion-item>            
+        </ion-item>  
+        </ion-card>          
       </ion-col>
 
       <ion-col col-3>
         <br>
-        <ion-item>2 of 3</ion-item>           
+        <ion-card><ion-item>STATUS</ion-item> </ion-card>          
       </ion-col>
 
       <ion-col col-4>
-        <br>                
+        <br>  
+        <ion-card>             
         <ion-item>
-          <ion-label  >Remote Enable</ion-label>
+          <ion-label  >Remote </ion-label>
           <ion-checkbox  item-right [(ngModel)]="remoteChecked" (click)="remoteAllowChange()"></ion-checkbox>
         </ion-item>
+        </ion-card> 
         <br>
       </ion-col>
     </ion-row>
@@ -36,7 +40,7 @@
       <ion-col col-8>
         <div class="overlaybox" >
           <div style="opacity: 1 " >
-              <img width="300" height="300" 
+              <img width="350" height="350" 
               [src]="rose" />
           </div>
 <!--  TYP A
@@ -63,7 +67,7 @@
 -->
 
           <div [attr.style] = 'arrowrotationSanitized' >
-            <img width="250" height="90" 
+            <img width="350" height="350" 
             [src]="pfeil"  /> 
           </div>     
 
@@ -77,20 +81,25 @@
 
       <ion-col col-4>
         <ion-list>
+          <ion-card>
           <ion-item>
-            <ion-label stacked class="colorlabel">Aktuelle <br> Richtung</ion-label>                  
+            <ion-label stacked class="colorlabel">IST-position</ion-label>                  
             <ion-label class="bigfont">{{positionGrad}} °</ion-label>                    
-            <ion-input type="text"></ion-input>
+
           </ion-item>
+          </ion-card>
         
+          <ion-card>
           <ion-item>
-            <ion-label stacked class="colorlabel"> SOLLeingabe</ion-label>
+            <ion-label stacked class="colorlabel"> SOLL-position</ion-label>
             <ion-input type="text" class="bigfont" [(ngModel)]="positionRequested"  (keypress)="positionRequestedChanged($event.keyCode)"></ion-input>
           </ion-item>
+          </ion-card>
 
+          <ion-card>
           <ion-list radio-group >
             <ion-item>
-              <ion-label stacked class="colorlabel">Rotor<br>Speed</ion-label>
+              <ion-label stacked class="colorlabel">Rotor Speed</ion-label>
             </ion-item>
 
             <ion-item>
@@ -107,7 +116,8 @@
               <ion-label>Schnell</ion-label>
               <ion-radio value="100" (click)="motorSpeedChange(3)"></ion-radio>
             </ion-item>
-          </ion-list>                           
+          </ion-list> 
+          </ion-card>                          
         </ion-list>
       </ion-col>
     </ion-row>
@@ -139,7 +149,7 @@
       </ion-col>           
     </ion-row>
 
-    <ion-row>
+    <ion-row class="border">
       <ion-col col-6>
           <ion-buttons>
               <button ion-button large (click)="gotoStationClicked()">
@@ -152,7 +162,7 @@
       </ion-col>
       <ion-col col-5>
       
-          <div class="mediumfont"> Actually heading to Call: &nbsp; <b>{{headingToCall}}</b></div>
+          <div class="mediumfont"> Aktuell ausgerichtet auf Call: &nbsp; <b>{{headingToCall}}</b></div>
       </ion-col>
     </ion-row>
 

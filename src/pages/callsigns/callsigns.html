@@ -1,29 +1,26 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title id="list-title">Rufzeichen Richtungen Bearbeiten</ion-title>
+    <ion-title id="list-title">Rufzeichen & Richtungen bearbeiten</ion-title>
 
     <ion-buttons end>
-<!--        <button ion-fab mini color="secondary" (click)="newClicked()">+</button> -->
-<!--        <button *ngIf="!show" ion-fab mini color="secondary" (click)="show = !show">{{show ? 'close' : '+'}}</button> -->
       <button *ngIf="!show" ion-fab mini color="secondary" (click)="newClicked()">+</button>
     </ion-buttons>
-
-    
 
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content padding>
+
+  <!-- PART1   shows input fields only if "show" = true   when add/edit is selected-->
       <ion-title *ngIf="show"  color="secondary">Dateneingabe/änderung</ion-title>
 
       <ion-card>
         <ion-item *ngIf="show">
-            <ion-label color="primary" type="text" floating >Call</ion-label>
+            <ion-label color="primary" type="text" floating required >Call</ion-label>
             <ion-input [(ngModel)]  ="callToEdit.call"></ion-input>
         </ion-item>
         <ion-item *ngIf="show">
-            <ion-label color="primary" type="text" floating >Richtung</ion-label>
+            <ion-label color="primary" type="number" floating required >Richtung</ion-label>
             <ion-input [(ngModel)]  ="callToEdit.bearing"></ion-input>
         </ion-item>
         <ion-item *ngIf="show">
@@ -39,50 +36,41 @@
             </button>
         </ion-item>
       </ion-card>
- 
 
-
-
-
-
-
-      <ion-searchbar *ngIf="!show" (ionInput)="onSearch($event)"></ion-searchbar>   
+<!-- PART2  Callsign list (and searchbar) shows up only if "show"= false -->
+      <ion-searchbar  *ngIf="!show" (ionInput)="onSearch($event)"></ion-searchbar>   
       
-
       <ion-card *ngIf="!show" >
         <ion-list >
-          <ion-list-header>    
-              <ion-row>
+
+          <ion-list-header class="mycard">      
+              <ion-row >
                   <ion-col col-3> Rufzeichen</ion-col>          
                   <ion-col col-2 >Richtung</ion-col>
                   <ion-col col-4 >Bemerkung </ion-col>
                   <ion-col col-3>                    
                   </ion-col>
-                </ion-row>
+              </ion-row>          
           </ion-list-header>
-
     
           <ion-item-sliding *ngFor="let callsign of callsigns"  >
-
-            <ion-item text-wrap>
-              <ion-card>
-              <ion-row>
-                <ion-col col-3  (click)="callSelected($event, callsign)" class="bigCall"> <b>{{callsign.call}}</b>   </ion-col>          
-                <ion-col col-1 >{{callsign.bearing}} </ion-col>
-                <ion-col col-5 >{{callsign.remark}}  </ion-col>
-                <ion-col col-3 >                    
-                  <button ion-button small color="secondary" (click)="callEdit(callsign)">
-                    <ion-icon name="create"></ion-icon>
-                  </button>
-                  <button ion-button small color="danger" (click)="callDelete(callsign)">
-                      <ion-icon name="trash"></ion-icon>
-                  </button>         
-                </ion-col>
-      
-              </ion-row>
+            <ion-item text-wrap >
+              <ion-card class="mycard">
+                <ion-row>
+                  <ion-col col-3   class="bigCall"> <b>{{callsign.call}}</b>   </ion-col>          
+                  <ion-col col-1 >{{callsign.bearing}} </ion-col>
+                  <ion-col col-5 >{{callsign.remark}}  </ion-col>
+                  <ion-col col-3 >                    
+                    <button ion-button small color="secondary" (click)="callEdit(callsign)">
+                      <ion-icon name="create"></ion-icon>
+                    </button>
+                    <button ion-button small color="danger" (click)="callDelete(callsign)">
+                        <ion-icon name="trash"></ion-icon>
+                    </button>         
+                  </ion-col>        
+                </ion-row>
               </ion-card>
             </ion-item>
-
           </ion-item-sliding>
 
         </ion-list>

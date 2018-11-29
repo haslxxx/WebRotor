@@ -1,29 +1,19 @@
-//import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-//import { WebSockClientComponent  } from '../../components/web-sock-client/web-sock-client';
-//import { HomePage } from '../../pages/home/home';
-
-//import { Observer } from 'observer';
-//import {Observable } from 'rxjs/Observable';
+import { Injectable, Input, Output, EventEmitter } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 
 import {AboutPage} from '../../pages/about/about';
 
-import { AlertController } from 'ionic-angular';
+//<app-news-input #input (ok)="list.refresh()"></app-news-input>
 
-/*
-  Generated class for the WebsocketServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class WebsocketServiceProvider {
-
+  //@Input () newIp: string;
 //  URL: string = 'ws://10.0.0.175';
   IP: string = '10.0.0.176';
 
   ws: WebSocket;  
+
+//  @Output('bearing')   position1 = new EventEmitter(); 
   
   
   //messages = [];
@@ -38,7 +28,7 @@ export class WebsocketServiceProvider {
   wsConnectionActivity: boolean = false;
 
   // TODO  zum funktionieren bringen
-  alertCtrl: AlertController;
+  //alertCtrl: AlertController;
 
 //  constructor(public alertCtrl: AlertController) {
     constructor() {
@@ -56,6 +46,15 @@ export class WebsocketServiceProvider {
 
 
 //    this.alertCtrl = new AlertController();  will irgendwelche parameter die ich nicht kenne
+  }
+
+  @Input('newip')
+  set name(ip: string) {
+    console.log('WS: @Input: IP = ' + ip);
+  }
+
+  ngOnChange() {
+    console.log('WS: onChange: IP = ' + this.IP);
   }
   
   // TODO #####################################
@@ -145,7 +144,6 @@ export class WebsocketServiceProvider {
         if (reply == "ERR") {
           var code = jsonObj["code"];
           var text = jsonObj["text"];
-//          this.showAlert(code, text); // TODO zum funktionieren bringen
           alert("ERROR -" + code + "- " + text); // so gehts auch !
         }
       }
@@ -153,6 +151,7 @@ export class WebsocketServiceProvider {
       if (bearing !== undefined) {  // data arrived
         this.position = bearing;
         this.myPositionSubject.next(this.position); //send Observable data
+//        this.position1.emit(this.position); // Dasselbe nur über input/output
       }  
     });
 
@@ -187,15 +186,6 @@ export class WebsocketServiceProvider {
     });
   }
 */
-
-  
-  // GEHT NICHT OHNE Alertcontroller, gibts aber nicht
-  showAlert(code, message) {
-    const alert = this.alertCtrl.create({
-      title: 'ERROR --' + code, subTitle: message, buttons: ['OK']
-    });
-    alert.present();
-  }
 
 
 //################################ Observer ##########################  geht alles nicht

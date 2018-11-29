@@ -28,9 +28,9 @@ export class CallsignsPage {
   }
 
   initCallToEdit() {
-    this.callToEdit.call = "111";
-    this.callToEdit.bearing = "222";
-    this.callToEdit.remark = "333";
+    this.callToEdit.call = "";
+    this.callToEdit.bearing = "";
+    this.callToEdit.remark = "";
   }
 
 
@@ -61,7 +61,10 @@ export class CallsignsPage {
 
   callDelete(callsign) {
     console.log("CSP: delete clicked");
-    this.storage.deleteCall(callsign);
+    if(confirm('Wirklich löschen ?')) {  //#################### confirm  öffnet ein zustimmungsfenster
+      this.storage.deleteCall(callsign);
+    }
+    
   }
 
   discardEntryClicked() {
